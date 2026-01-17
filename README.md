@@ -86,33 +86,33 @@ A **FastAPI-based read-only API** provides access to stored data:
 Swagger UI available at:
 ---
 
-##  Repository Structure
+###  Repository Structure
 
-faculty-finder/<br>
-│<br>
-├── api/<br>
-│ └── main.py<br>
-│<br>
-├── ingestion/<br>
-│ ├── discover_urls.py<br>
-│ ├── scrape_faculty.py<br>
-│ └── pycache/<br>
-│<br>
-├── logs/<br>
-│ ├── llm_usage.md<br>
-│ └── scraper.log<br>
-│<br>
-├── storage/<br>
-│ ├── db.py<br>
-│ ├── schema.sql<br>
-│ ├── init_db.py<br>
-│ └── faculty.db<br>
-│<br>
-├── transformation/<br>
-│<br>
-├── run_pipeline.py<br>
-├── requirements.txt<br>
-└── README.md<br>
+#### faculty-finder/<br>
+#### │<br>
+#### ├── api/<br>
+#### │ └── main.py<br>
+#### │<br>
+#### ├── ingestion/<br>
+#### │ ├── discover_urls.py<br>
+#### │ ├── scrape_faculty.py<br>
+#### │ └── pycache/<br>
+#### │<br>
+#### ├── logs/<br>
+#### │ ├── llm_usage.md<br>
+#### │ └── scraper.log<br>
+#### │<br>
+#### ├── storage/<br>
+#### │ ├── db.py<br>
+#### │ ├── schema.sql<br>
+#### │ ├── init_db.py<br>
+#### │ └── faculty.db<br>
+#### │<br>
+#### ├── transformation/<br>
+#### │<br>
+#### ├── run_pipeline.py<br>
+#### ├── requirements.txt<br>
+#### └── README.md<br>
 ---
 
 ##  How to Run
