@@ -85,7 +85,7 @@ A **FastAPI-based read-only API** provides access to stored data:
 
 Swagger UI available at:
 
-####  Repository Structure
+###  Repository Structure
 
 faculty-finder/<br>
 │<br>
