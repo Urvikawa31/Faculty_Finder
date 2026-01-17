@@ -26,15 +26,15 @@ This project implements a **production-style ETL pipeline** that:
 
 ## Architecture
 
-University Website (HTML)
-↓
-Faculty URL Discovery
-↓
-Profile-Level Scraping
-↓
-SQLite Database (Raw HTML Stored)
-↓
-FastAPI (Read-Only APIs)
+University Website (HTML)<br>
+↓<br>
+Faculty URL Discovery<br>
+↓<br>
+Profile-Level Scraping<br>
+↓<br>
+SQLite Database (Raw HTML Stored)<br>
+↓<br>
+FastAPI (Read-Only APIs)<br>
 
 ---
 
@@ -88,14 +88,14 @@ Swagger UI available at:
 
 ##  Repository Structure
 
-aculty-finder/
-│
-├── ingestion/ # URL discovery & scraping logic
-├── storage/ # SQLite DB, schema, insert logic
-├── api/ # FastAPI serving layer
-├── run_pipeline.py # End-to-end pipeline runner
-├── requirements.txt
-└── README.md
+aculty-finder/<br>
+│<br>
+├── ingestion/ # URL discovery & scraping logic<br>
+├── storage/ # SQLite DB, schema, insert logic<br>
+├── api/ # FastAPI serving layer<br>
+├── run_pipeline.py # End-to-end pipeline runner<br>
+├── requirements.txt<br>
+└── README.md<br>
 
 
 ---
@@ -107,12 +107,19 @@ aculty-finder/
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+```
 
-2️ Initialize Database
+### 2️ Initialize Database
+```bash
 python storage/init_db.py
+```
 
-3️ Run Data Pipeline
+### 3️ Run Data Pipeline
+```bash
 python run_pipeline.py
+```
 
-4️ Start API Server
+### 4️ Start API Server
+```bash
 uvicorn api.main:app --reload
+```
