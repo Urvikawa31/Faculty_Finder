@@ -88,16 +88,31 @@ Swagger UI available at:
 
 ##  Repository Structure
 
-aculty-finder/<br>
+faculty-finder/<br>
 │<br>
-├── ingestion/ # URL discovery & scraping logic<br>
-├── storage/ # SQLite DB, schema, insert logic<br>
 ├── api/ # FastAPI serving layer<br>
+│ └── main.py<br>
+│<br>
+├── ingestion/ # Web crawling & scraping logic<br>
+│ ├── discover_urls.py # Discover faculty profile URLs<br>
+│ ├── scrape_faculty.py # Extract faculty profile data<br>
+│ └── pycache/<br>
+│<br>
+├── logs/ # Logging & audit artifacts<br>
+│ ├── llm_usage.md # Logged LLM prompts & responses<br>
+│ └── scraper.log # Scraper execution logs<br>
+│<br>
+├── storage/ # Persistence layer (SQLite)<br>
+│ ├── db.py # Database connection<br>
+│ ├── schema.sql # Database schema<br>
+│ ├── init_db.py # Database initialization<br>
+│ └── faculty.db # SQLite database (generated)<br>
+│<br>
+├── transformation/ # Future data cleaning & NLP (Phase-2)<br>
+│<br>
 ├── run_pipeline.py # End-to-end pipeline runner<br>
-├── requirements.txt<br>
-└── README.md<br>
-
-
+├── requirements.txt # Python dependencies<br>
+└── README.md # Project documentation<br>
 ---
 
 ##  How to Run
