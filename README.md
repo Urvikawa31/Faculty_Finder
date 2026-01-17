@@ -87,31 +87,31 @@ Swagger UI available at:
 
 ####  Repository Structure
 
-#### faculty-finder/
-#### │
-#### ├── api/
-#### │ └── main.py
-#### │
-#### ├── ingestion/
-#### │ ├── discover_urls.py
-#### │ ├── scrape_faculty.py
-#### │ └── pycache/
-#### │
-#### ├── logs/
-#### │ ├── llm_usage.md
-#### │ └── scraper.log
-#### │
-#### ├── storage/
-#### │ ├── db.py
-#### │ ├── schema.sql
-#### │ ├── init_db.py
-#### │ └── faculty.db
-#### │
-#### ├── transformation/
-#### │
-#### ├── run_pipeline.py
-#### ├── requirements.txt
-#### └── README.md
+faculty-finder/
+│
+├── api/
+│ └── main.py
+│
+├── ingestion/
+│ ├── discover_urls.py
+│ ├── scrape_faculty.py
+│ └── pycache/
+│
+├── logs/
+│ ├── llm_usage.md
+│ └── scraper.log
+│
+├── storage/
+│ ├── db.py
+│ ├── schema.sql
+│ ├── init_db.py
+│ └── faculty.db
+│
+├── transformation/
+│
+├── run_pipeline.py
+├── requirements.txt
+└── README.md
 
 ##  How to Run
 
