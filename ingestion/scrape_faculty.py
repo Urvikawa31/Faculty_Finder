@@ -1,17 +1,21 @@
-import requests
+from ingestion.http_client import get_session
 from bs4 import BeautifulSoup
 
 BASE_URL = "https://www.daiict.ac.in"
+session = get_session()
 
 def clean_text(text):
     if not text:
         return None
     return " ".join(text.split())
 
-
 def scrape_faculty_profile(profile_url, faculty_category):
-    resp = requests.get(profile_url, timeout=10)
-    resp.raise_for_status()
+    resp = session.get(profile_url)
+
+    if resp.status_code != 200:
+        raise RuntimeError(
+            f"Failed to fetch profile ({resp.status_code}): {profile_url}"
+        )
 
     soup = BeautifulSoup(resp.text, "lxml")
 

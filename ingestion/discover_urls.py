@@ -1,3 +1,4 @@
+from ingestion.http_client import get_session
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
@@ -12,9 +13,7 @@ SEED_URLS = {
     "professor_of_practice": "/professor-practice"
 }
 
-HEADERS = {
-    "User-Agent": "FacultyFinderBot/1.0"
-}
+session = get_session()
 
 def discover_faculty_urls():
     discovered = {}
@@ -23,9 +22,11 @@ def discover_faculty_urls():
         seed_url = urljoin(BASE_URL, path)
         print(f"[INFO] Crawling {seed_url}")
 
-        resp = requests.get(seed_url, headers=HEADERS, timeout=15)
-        resp.raise_for_status()
-
+        resp = session.get(seed_url)
+        if resp.status_code != 200:
+            print(f"[WARN] Failed to fetch {seed_url}: {resp.status_code}")
+            continue
+        
         soup = BeautifulSoup(resp.text, "lxml")
 
         for a in soup.find_all("a", href=True):

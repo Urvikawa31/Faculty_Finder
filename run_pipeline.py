@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from ingestion.discover_urls import discover_faculty_urls
 from ingestion.scrape_faculty import scrape_faculty_profile
 from storage.insert_faculty import insert_faculty
+from cleaning.clean_faculty_records import clean_all_faculty_fields
 
 def main():
     faculty_urls = discover_faculty_urls()
@@ -20,6 +21,8 @@ def main():
             print(f"Inserted: {data['name']}")
         except Exception as e:
             print(f"[ERROR] {f['profile_url']} -> {e}")
+
+    clean_all_faculty_fields()
 
 if __name__ == "__main__":
     main()
