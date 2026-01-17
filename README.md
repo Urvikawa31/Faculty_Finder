@@ -90,29 +90,29 @@ Swagger UI available at:
 
 faculty-finder/<br>
 │<br>
-├── api/ # FastAPI serving layer<br>
+├── api/<br>
 │ └── main.py<br>
 │<br>
-├── ingestion/ # Web crawling & scraping logic<br>
-│ ├── discover_urls.py # Discover faculty profile URLs<br>
-│ ├── scrape_faculty.py # Extract faculty profile data<br>
+├── ingestion/<br>
+│ ├── discover_urls.py<br>
+│ ├── scrape_faculty.py<br>
 │ └── pycache/<br>
 │<br>
-├── logs/ # Logging & audit artifacts<br>
-│ ├── llm_usage.md # Logged LLM prompts & responses<br>
-│ └── scraper.log # Scraper execution logs<br>
+├── logs/<br>
+│ ├── llm_usage.md<br>
+│ └── scraper.log<br>
 │<br>
-├── storage/ # Persistence layer (SQLite)<br>
-│ ├── db.py # Database connection<br>
-│ ├── schema.sql # Database schema<br>
-│ ├── init_db.py # Database initialization<br>
-│ └── faculty.db # SQLite database (generated)<br>
+├── storage/<br>
+│ ├── db.py<br>
+│ ├── schema.sql<br>
+│ ├── init_db.py<br>
+│ └── faculty.db<br>
 │<br>
-├── transformation/ # Future data cleaning & NLP (Phase-2)<br>
+├── transformation/<br>
 │<br>
-├── run_pipeline.py # End-to-end pipeline runner<br>
-├── requirements.txt # Python dependencies<br>
-└── README.md # Project documentation<br>
+├── run_pipeline.py<br>
+├── requirements.txt<br>
+└── README.md<br>
 ---
 
 ##  How to Run
