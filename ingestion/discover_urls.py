@@ -1,7 +1,6 @@
-from ingestion.http_client import get_session
-import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
+from ingestion.http_client import get_session
 
 BASE_URL = "https://www.daiict.ac.in"
 
@@ -13,7 +12,16 @@ SEED_URLS = {
     "professor_of_practice": "/professor-practice"
 }
 
+PROFILE_PREFIXES = [
+    "/faculty/",
+    "/adjunct-faculty/",
+    "/adjunct-faculty-international/",
+    "/distinguished-professor/",
+    "/professor-practice/"
+]
+
 session = get_session()
+
 
 def discover_faculty_urls():
     discovered = {}
@@ -26,26 +34,36 @@ def discover_faculty_urls():
         if resp.status_code != 200:
             print(f"[WARN] Failed to fetch {seed_url}: {resp.status_code}")
             continue
-        
+
         soup = BeautifulSoup(resp.text, "lxml")
 
+        # Changes done in it by Harsh
         for a in soup.find_all("a", href=True):
-            href = a["href"]
-            full_url = urljoin(BASE_URL, href)
+            raw_href = a["href"]
 
+            # Normalize URL (handles relative + absolute)
+            full_url = urljoin(BASE_URL, raw_href)
             parsed = urlparse(full_url)
 
-            if parsed.path.startswith(path + "/"):
-                discovered[full_url] = {
-                    "profile_url": full_url,
-                    "faculty_category": category
-                }
+            # Only accept DAIICT internal links
+            if parsed.netloc != "www.daiict.ac.in":
+                continue
+
+            # Check faculty profile path
+            if any(parsed.path.startswith(prefix) for prefix in PROFILE_PREFIXES):
+
+                if full_url not in discovered:
+                    discovered[full_url] = {
+                        "profile_url": full_url,
+                        # CATEGORY COMES FROM SOURCE PAGE
+                        "faculty_category": category
+                    }
 
     return list(discovered.values())
 
 
 if __name__ == "__main__":
     urls = discover_faculty_urls()
-    print(f"Discovered {len(urls)} faculty profiles")
+    print(f"\nDiscovered {len(urls)} faculty profiles\n")
     for u in urls:
         print(u)
