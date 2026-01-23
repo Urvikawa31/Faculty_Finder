@@ -20,7 +20,7 @@ This project implements a **production-style ETL pipeline** that:
 - Crawls multiple faculty directories
 - Extracts structured and semi-structured data from profile pages
 - Stores **raw HTML content** for future processing
-- Exposes data via **REST APIs** for downstream consumption
+- Exposes data via **FastAPI** for downstream consumption
 
 ---
 
@@ -118,7 +118,7 @@ faculty-finder/<br>
 ### 1️ Create Virtual Environment & Install Dependencies
 ```bash
 python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
+# ubuntu: source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
