@@ -207,7 +207,7 @@ This project represents **human-led engineering with LLM assistance**.
 The LLM accelerated thinking, debugging, and learning —  
 but **every critical decision, implementation, and validation was performed manually**.
 
-**Developer:** Harsh Patel and Urvi Kawa
+**Developer:** Harsh Patel and Urvi Kawa<br>
 **Role:** Data Engineer / Data Scientist  
 **Project:** Faculty Finder
 
