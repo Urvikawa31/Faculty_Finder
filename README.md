@@ -3,7 +3,10 @@
 ## Overview
 **Faculty Finder** is an end-to-end **Data Engineering project** that builds a scalable pipeline to discover, extract, store, and serve faculty information from a university website. The system prepares high-quality data for downstream **semantic search and NLP-based applications**.
 
-This repository focuses on **Phase 1: Data Engineering**, covering ingestion, storage, and serving layers using industry best practices.
+This repository focuses on **Phase 1: Data Engineering**, covering:
+- Data ingestoin
+- Data Cleaning & Storage
+- API-based data serving
 
 ---
 
@@ -18,6 +21,7 @@ Before applying NLP or semantic search, a **robust, reproducible data pipeline**
 This project implements a **production-style ETL pipeline** that:
 
 - Crawls multiple faculty directories
+- Dynamically discovers faculty profile URLs
 - Extracts structured and semi-structured data from profile pages
 - Stores **raw HTML content** for future processing
 - Exposes data via **FastAPI** for downstream consumption
@@ -47,8 +51,11 @@ FastAPI (Read-Only APIs)<br>
   - International Adjunct Faculty
   - Distinguished Professors
   - Professors of Practice
-- Dynamically discovers profile URLs
-- Handles pagination, missing fields, and inconsistent layouts
+- Handles real-world issues:
+  - Inconsistent URL taxonomy
+  - Missing profile fields
+  - Absolute and relative URLs
+- Uses retry and backoff for robustness
 
 ---
 
@@ -136,6 +143,40 @@ python run_pipeline.py
 uvicorn api.main:app --reload
 ```
 
-## Author:-
-### Name :- Urvi Kava - 202518006
-### Name :- Patel Harsh Satishkumar - 202518011
+## Team & Contributions
+
+### Group Name  
+**Infraglyph**
+
+---
+
+### Team Members
+
+| Name | Roll Number |
+|------|-------------|
+| **Urvi Kava** | 202518006 |
+| **Patel Harsh Satishkumar** | 202518011 |
+
+---
+
+### 🔹 Urvi Kawa (202518006)  
+**Role: Data Ingestion & Pipeline Infrastructure**
+
+- Faculty URL discovery and crawling  
+- Handling inconsistent website structure and real-world edge cases  
+- Profile-level HTML scraping  
+- HTTP robustness (retry mechanism and exponential backoff)  
+- Database persistence and pipeline orchestration  
+
+---
+
+### 🔹 Patel Harsh Satishkumar (202518011)  
+**Role: Data Cleaning, Storage & API Layer**
+
+- Database schema design  
+- Cleaning and normalization of scraped data  
+- Handling missing and noisy HTML content  
+- FastAPI-based read-only API development  
+- Documentation and project structuring  
+
+---
