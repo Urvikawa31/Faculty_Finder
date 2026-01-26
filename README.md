@@ -38,7 +38,7 @@ FastAPI (Read-Only APIs)<br>
 
 ---
 
-## 🧩 Pipeline Components
+## Pipeline Components
 
 ### 1️ Ingestion
 - Crawls multiple faculty directories:
@@ -99,7 +99,6 @@ faculty-finder/<br>
 │<br>
 ├── logs/<br>
 │ ├── llm_usage.md<br>
-│ └── scraper.log<br>
 │<br>
 ├── storage/<br>
 │ ├── db.py<br>
@@ -136,3 +135,7 @@ python run_pipeline.py
 ```bash
 uvicorn api.main:app --reload
 ```
+
+## Author:-
+### Name :- Urvi Kava - 202518006
+### Name :- Patel Harsh Satishkumar - 202518011
