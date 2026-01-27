@@ -107,6 +107,62 @@ Swagger UI available at:<br>
 local url -> `http://127.0.0.1:8000/docs`<br>
 public url -> <br>
 
+### Data Analysis & Statistics
+
+After ingestion and cleaning, the dataset was analyzed to understand data quality and distribution.
+
+#### 📊 Dataset Overview
+- Total Faculty Records: **110**
+- Total Attributes per Record: **14+ fields**
+
+---
+
+#### Faculty Distribution by Category
+
+| Category | Count | Percentage |
+|---------|-------|-----------|
+| Regular Faculty | 67 | 60.91% |
+| Adjunct Faculty | 26 | 23.64% |
+| International Adjunct Faculty | 11 | 10.00% |
+| Professor of Practice | 4 | 3.64% |
+| Distinguished Professor | 2 | 1.82% |
+
+---
+
+#### Missing Data Analysis
+
+| Field | Missing % |
+|-------|----------|
+| Education | 1.82% |
+| Phone | 29.09% |
+| Address | 31.82% |
+| Email | 0.91% |
+| Biography | 38.18% |
+| Specialization | 1.82% |
+| Publications | 33.64% |
+| Teaching | 36.36% |
+| Research | 87.27% |
+
+Key Insight:  
+Some academic fields (like research and biography) are not consistently available across faculty profiles, highlighting real-world data quality challenges.
+
+---
+
+#### Text Length Statistics (NLP Readiness)
+
+| Field | Non-Empty Records | Avg Length | Max Length |
+|-------|------------------|----------|----------|
+| Biography | 68 | 541 | 2439 |
+| Specialization | 108 | 111 | 503 |
+| Teaching | 70 | 123 | 1885 |
+| Research | 14 | 42 | 1897 |
+| Publications | 73 | 1831 | 16202 |
+
+Key Insight:
+Publications contain the richest textual information, making them highly valuable for semantic search and embeddings.
+
+---
+
 ###  Repository Structure
 
 faculty-finder/<br>
