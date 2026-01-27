@@ -103,9 +103,9 @@ A **FastAPI-based read-only API** provides access to stored data:
 | `GET /faculty/{id}` | Fetch faculty by ID |
 | `GET /faculty/category/{category}` | Filter by faculty category |
 
-Swagger UI available at:
-local url -> `http://127.0.0.1:8000/`
-public url -> 
+Swagger UI available at:<br>
+local url -> `http://127.0.0.1:8000/docs`<br>
+public url -> <br>
 
 ###  Repository Structure
 
