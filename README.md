@@ -113,9 +113,15 @@ faculty-finder/<br>
 │<br>
 ├── api/<br>
 │ └── main.py<br>
+|<br>
+├── cleaning/<br>
+│ ├── pycache /<br>
+│ ├── __init__.py<br>
+│ └── clean_faculty_records.py<br>
 │<br>
 ├── ingestion/<br>
 │ ├── discover_urls.py<br>
+│ ├── http_client.py<br>
 │ ├── scrape_faculty.py<br>
 │ └── pycache/<br>
 │<br>
@@ -125,10 +131,9 @@ faculty-finder/<br>
 ├── storage/<br>
 │ ├── db.py<br>
 │ ├── schema.sql<br>
+│ ├── insert_faculty.py<br>
 │ ├── init_db.py<br>
 │ └── faculty.db<br>
-│<br>
-├── transformation/<br>
 │<br>
 ├── run_pipeline.py<br>
 ├── requirements.txt<br>
