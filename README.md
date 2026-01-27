@@ -166,7 +166,7 @@ uvicorn api.main:app --reload
 ## Team & Contributions
 
 ### Group Name  
-**Infraglyph**
+**Infraglyph** - Uncovering hidden meaningful patterns
 
 ---
 
