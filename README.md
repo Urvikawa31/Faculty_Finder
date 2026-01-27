@@ -109,13 +109,11 @@ public url -> <br>
 
 ---
 
-## Data Analysis & Statistics
-
-After ingestion and cleaning, the dataset was analyzed to understand data quality and distribution.
+### Data Analysis & Statistics
 
 #### 📊 Dataset Overview
 - Total Faculty Records: **110**
-- Total Attributes per Record: **14+ fields**
+- Total Attributes per Record: **12 fields**
 
 ---
 
@@ -145,9 +143,6 @@ After ingestion and cleaning, the dataset was analyzed to understand data qualit
 | Teaching | 36.36% |
 | Research | 87.27% |
 
-Key Insight:  
-Some academic fields (like research and biography) are not consistently available across faculty profiles, highlighting real-world data quality challenges.
-
 ---
 
 #### Text Length Statistics (NLP Readiness)
@@ -159,9 +154,6 @@ Some academic fields (like research and biography) are not consistently availabl
 | Teaching | 70 | 123 | 1885 |
 | Research | 14 | 42 | 1897 |
 | Publications | 73 | 1831 | 16202 |
-
-Key Insight:
-Publications contain the richest textual information, making them highly valuable for semantic search and embeddings.
 
 ---
 
