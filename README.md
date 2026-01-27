@@ -38,7 +38,7 @@ Profile-Level Scraping<br>
 ↓<br>
 SQLite Database (Raw HTML Stored)<br>
 ↓<br>
-Cleaning Raw HTML
+Cleaning Raw HTML<br>
 ↓<br>
 FastAPI (Read-Only APIs)<br>
 
