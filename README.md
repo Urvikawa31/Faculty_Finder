@@ -53,6 +53,7 @@ FastAPI (Read-Only APIs)<br>
   - International Adjunct Faculty
   - Distinguished Professors
   - Professors of Practice
+- Dynamically discovers faculty profile URLs
 - Handles real-world issues:
   - Inconsistent URL taxonomy
   - Missing profile fields
@@ -75,7 +76,17 @@ For each faculty profile, the pipeline extracts:
 
 ---
 
-### 3️ Storage
+### 3️ Cleaning & Transformation
+- Removes HTML tags and noisy markup
+- Normalizes text fields (whitespace, encoding, formatting)
+- Handles missing, null, and irregular values gracefully
+- Converts semi-structured HTML into clean text suitable for NLP tasks
+
+This step ensures the data is **consistent, readable, and ready for downstream Task**.
+
+---
+
+### 4 Storage
 - SQLite database for lightweight persistence
 - Schema-driven design
 - Raw HTML stored as TEXT fields (Bronze Layer)
@@ -83,7 +94,7 @@ For each faculty profile, the pipeline extracts:
 
 ---
 
-### 4️ Serving (API Layer)
+### 5 Serving (API Layer)
 A **FastAPI-based read-only API** provides access to stored data:
 
 | Endpoint | Description |
@@ -93,6 +104,8 @@ A **FastAPI-based read-only API** provides access to stored data:
 | `GET /faculty/category/{category}` | Filter by faculty category |
 
 Swagger UI available at:
+local url -> `http://127.0.0.1:8000/`
+public url -> 
 
 ###  Repository Structure
 
