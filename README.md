@@ -165,18 +165,37 @@ faculty-finder/<br>
 │ └── main.py<br>
 |<br>
 ├── cleaning/<br>
-│ ├── pycache /<br>
 │ ├── __init__.py<br>
 │ └── clean_faculty_records.py<br>
+|<br>
+├── data/<br>
+│ ├── processed<br>
+|     └── clean_faculty_data.csv<br>
+│ ├── raw<br>
+|     └── raw_faculty_data.csv<br>
+│<br>
+├── data analysis/<br>
+│ ├── category_statistics.py<br>
+│ ├── data_overview.py<br>
+│ ├── data_quality_checks.py<br>
+│ ├── load_data.py<br>
+│ ├── missing_value_statistics.py<br>
+│ ├── statistics.py<br>
+│ ├── summary_report.py<br>
+│ └── text_statistics.py<br>
 │<br>
 ├── ingestion/<br>
 │ ├── discover_urls.py<br>
 │ ├── http_client.py<br>
-│ ├── scrape_faculty.py<br>
-│ └── pycache/<br>
+│ └── scrape_faculty.py<br>
 │<br>
 ├── logs/<br>
 │ ├── llm_usage.md<br>
+│<br>
+├── pipeline/<br>
+│ ├── step_1_ingestion.py<br>
+│ ├── step_2_storage.py<br>
+│ └── step_3_cleaning.py<br>
 │<br>
 ├── storage/<br>
 │ ├── db.py<br>
@@ -190,6 +209,8 @@ faculty-finder/<br>
 └── README.md<br>
 
 ##  How to Run
+
+## Entire Pipeline
 
 ### 1️ Create Virtual Environment & Install Dependencies
 ```bash
@@ -211,6 +232,23 @@ python run_pipeline.py
 ### 4️ Start API Server
 ```bash
 uvicorn api.main:app --reload
+```
+
+## Step Wise
+
+### 1️ Data Ingestion
+```bash
+python pipeline/step_1_ingestion.py
+```
+
+### 2️ Data Storage
+```bash
+python pipeline/step_2_storage.py
+```
+
+### 3️ Data Cleaning
+```bash
+python pipeline/step_3_cleaning.py
 ```
 
 ## Team & Contributions
