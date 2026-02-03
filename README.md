@@ -107,6 +107,56 @@ Swagger UI available at:<br>
 local url -> `http://127.0.0.1:8000/docs`<br>
 public url -> <br>
 
+---
+
+### Data Analysis & Statistics
+
+#### 📊 Dataset Overview
+- Total Faculty Records: **110**
+- Total Attributes per Record: **12 fields**
+
+---
+
+#### Faculty Distribution by Category
+
+| Category | Count | Percentage |
+|---------|-------|-----------|
+| Regular Faculty | 67 | 60.91% |
+| Adjunct Faculty | 26 | 23.64% |
+| International Adjunct Faculty | 11 | 10.00% |
+| Professor of Practice | 4 | 3.64% |
+| Distinguished Professor | 2 | 1.82% |
+
+---
+
+#### Missing Data Analysis
+
+| Field | Missing % |
+|-------|----------|
+| Education | 1.82% |
+| Phone | 29.09% |
+| Address | 31.82% |
+| Email | 0.91% |
+| Biography | 38.18% |
+| Specialization | 1.82% |
+| Publications | 33.64% |
+| Teaching | 36.36% |
+| Research | 87.27% |
+
+---
+
+#### Text Length Statistics (NLP Readiness)
+
+| Field | Non-Empty Records | Avg Length | Max Length |
+|-------|------------------|----------|----------|
+| Biography | 68 | 541 | 2439 |
+| Specialization | 108 | 111 | 503 |
+| Teaching | 70 | 123 | 1885 |
+| Research | 14 | 42 | 1897 |
+| Publications | 73 | 1831 | 16202 |
+
+---
+
 ###  Repository Structure
 
 faculty-finder/<br>
@@ -115,18 +165,37 @@ faculty-finder/<br>
 │ └── main.py<br>
 |<br>
 ├── cleaning/<br>
-│ ├── pycache /<br>
 │ ├── __init__.py<br>
 │ └── clean_faculty_records.py<br>
+|<br>
+├── data/<br>
+│ ├── processed<br>
+|     └── clean_faculty_data.csv<br>
+│ ├── raw<br>
+|     └── raw_faculty_data.csv<br>
+│<br>
+├── data analysis/<br>
+│ ├── category_statistics.py<br>
+│ ├── data_overview.py<br>
+│ ├── data_quality_checks.py<br>
+│ ├── load_data.py<br>
+│ ├── missing_value_statistics.py<br>
+│ ├── statistics.py<br>
+│ ├── summary_report.py<br>
+│ └── text_statistics.py<br>
 │<br>
 ├── ingestion/<br>
 │ ├── discover_urls.py<br>
 │ ├── http_client.py<br>
-│ ├── scrape_faculty.py<br>
-│ └── pycache/<br>
+│ └── scrape_faculty.py<br>
 │<br>
 ├── logs/<br>
 │ ├── llm_usage.md<br>
+│<br>
+├── pipeline/<br>
+│ ├── step_1_ingestion.py<br>
+│ ├── step_2_storage.py<br>
+│ └── step_3_cleaning.py<br>
 │<br>
 ├── storage/<br>
 │ ├── db.py<br>
@@ -140,6 +209,8 @@ faculty-finder/<br>
 └── README.md<br>
 
 ##  How to Run
+
+## Entire Pipeline
 
 ### 1️ Create Virtual Environment & Install Dependencies
 ```bash
@@ -161,6 +232,23 @@ python run_pipeline.py
 ### 4️ Start API Server
 ```bash
 uvicorn api.main:app --reload
+```
+
+## Step Wise
+
+### 1️ Data Ingestion
+```bash
+python pipeline/step_1_ingestion.py
+```
+
+### 2️ Data Storage
+```bash
+python pipeline/step_2_storage.py
+```
+
+### 3️ Data Cleaning
+```bash
+python pipeline/step_3_cleaning.py
 ```
 
 ## Team & Contributions
