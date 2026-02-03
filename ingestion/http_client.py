@@ -17,7 +17,7 @@ def get_session(
     Retries on:
     - Connection errors
     - HTTP 500, 502, 503, 504
-
+    
     Backoff pattern:
     1s → 2s → 4s
     """
