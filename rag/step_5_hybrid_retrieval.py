@@ -4,11 +4,13 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from rag.step_2_bm25_retrieval import bm25_retrieve
 from rag.step_4_semantic_retrieval import semantic_retrieve
-from rag.step_6_llm_explainability import explain_ranked_results_llm
+from rag.step_6_llm_explainability import explain_and_rerank
 from rag.utils import load_faculty_documents
 
 
-# NORMALIZATION
+# -------------------------
+# NORMALIZATION FUNCTION
+# -------------------------
 def normalize(scores):
     min_s = min(scores)
     max_s = max(scores)
@@ -19,7 +21,9 @@ def normalize(scores):
     return [(s - min_s) / (max_s - min_s) for s in scores]
 
 
+# -------------------------
 # HYBRID RETRIEVAL
+# -------------------------
 def hybrid_retrieve(query, top_k=10, alpha=0.6):
     """
     alpha = weight for semantic score
@@ -44,7 +48,6 @@ def hybrid_retrieve(query, top_k=10, alpha=0.6):
 
     for fid, b_score, s_score in zip(faculty_ids, bm25_norm, semantic_norm):
         fused_score = (1 - alpha) * b_score + alpha * s_score
-
         source = bm25_dict.get(fid) or semantic_dict.get(fid)
 
         fused_results.append({
@@ -58,28 +61,36 @@ def hybrid_retrieve(query, top_k=10, alpha=0.6):
     return fused_results[:top_k]
 
 
-# MAIN
+# -------------------------
+# MAIN PIPELINE
+# -------------------------
 if __name__ == "__main__":
     query = "Natural Language Processing"
 
-    # Step 5: Hybrid ranking
-    ranked_results = hybrid_retrieve(query, top_k=5)
+    # Step 5: Hybrid Retrieval
+    hybrid_results = hybrid_retrieve(query, top_k=5)
 
-    # Load faculty documents (for explainability context)
+    print("\n--- Hybrid Retrieval Results ---\n")
+    for r in hybrid_results:
+        print(
+            f"{r['name']} | "
+            f"{r['faculty_category']} | "
+            f"Score: {r['final_score']}"
+        )
+
+    # Load faculty documents for context
     faculty_docs = load_faculty_documents()
 
     enriched_results = []
-    for r in ranked_results:
-        doc = faculty_docs[r["faculty_id"]]
+    for r in hybrid_results:
+        doc = faculty_docs.get(r["faculty_id"], {})
         enriched_results.append({**r, **doc})
 
-    # Step 6: LLM Explainability
-    explained_results = explain_ranked_results_llm(query, enriched_results)
+    # Step 6: LLM Reranking + Explainability
+    print("\n--- LLM Reranked & Explained Results ---\n")
+    llm_results = explain_and_rerank(query, enriched_results)
 
-    print(f"\nHybrid + LLM Explained Results for query: '{query}'\n")
-
-    for r in explained_results:
-        print(f"{r['name']} ({r['faculty_category']})")
-        print(f"Score: {r['final_score']}")
-        print(r["explanation"])
+    for r in llm_results:
+        print(f"Rank {r['rank']}: {r['name']} ({r['category']})")
+        print(f"Reason: {r['reason']}")
         print("-" * 60)

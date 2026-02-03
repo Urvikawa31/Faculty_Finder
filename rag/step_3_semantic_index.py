@@ -1,45 +1,40 @@
 import json
 from pathlib import Path
-from langchain_core.documents import Document
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# Paths
 BASE_DIR = Path(__file__).resolve().parents[1]
-DOCS_PATH = BASE_DIR / "rag" / "artifacts" / "faculty_documents.json"
-VECTOR_DIR = BASE_DIR / "rag" / "vector_store" / "chroma"
-VECTOR_DIR.mkdir(parents=True, exist_ok=True)
+EVIDENCE_PATH = BASE_DIR / "rag" / "artifacts" / "faculty_evidence_units.json"
+VECTOR_DIR = BASE_DIR / "rag" / "vector_store" / "chroma_evidence"
 
-# Load Faculty Docs
-with open(DOCS_PATH, "r", encoding="utf-8") as f:
-    faculty_docs = json.load(f)
+def load_evidence_units():
+    with open(EVIDENCE_PATH, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-documents = []
-for doc in faculty_docs:
-    documents.append(
-        Document(
-            page_content=doc["text"],
-            metadata={
-                "faculty_id": doc["faculty_id"],
-                "name": doc["name"],
-                "faculty_category": doc["faculty_category"]
-            }
-        )
+if __name__ == "__main__":
+    evidence_units = load_evidence_units()
+
+    texts = [e["text"] for e in evidence_units]
+    metadatas = [
+        {
+            "faculty_id": e["faculty_id"],
+            "field": e["field"],
+            "name": e["name"],
+            "faculty_category": e["faculty_category"]
+        }
+        for e in evidence_units
+    ]
+
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-# Local Embedding Model
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+    vectorstore = Chroma.from_texts(
+        texts=texts,
+        metadatas=metadatas,
+        embedding=embeddings,
+        persist_directory=str(VECTOR_DIR)
+    )
 
-# Build & Persist Vector Stores
-vectorstore = Chroma.from_documents(
-    documents=documents,
-    embedding=embeddings,
-    persist_directory=str(VECTOR_DIR)
-)
-
-vectorstore.persist()
-
-print(f"[STEP 3 COMPLETE] Semantic index built with {len(documents)} documents")
-print(f"[VECTOR STORE] {VECTOR_DIR}")
+    print(f"[STEP 3 COMPLETE] Indexed {len(texts)} evidence units")
+    print(f"[VECTOR STORE] {VECTOR_DIR}")

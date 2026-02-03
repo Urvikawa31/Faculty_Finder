@@ -1,49 +1,55 @@
 from pathlib import Path
+from collections import defaultdict
 from langchain_community.vectorstores import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 
-# Paths
 BASE_DIR = Path(__file__).resolve().parents[1]
-VECTOR_DIR = BASE_DIR / "rag" / "vector_store" / "chroma"
+VECTOR_DIR = BASE_DIR / "rag" / "vector_store" / "chroma_evidence"
 
-# Load Vector Store
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+FIELD_WEIGHTS = {
+    "research": 0.4,
+    "publications": 0.3,
+    "teaching": 0.2,
+    "biography": 0.1,
+    "education": 0.1
+}
 
-vectorstore = Chroma(
-    persist_directory=str(VECTOR_DIR),
-    embedding_function=embeddings
-)
-
-# Semantic Retrieval
-def semantic_retrieve(query: str, top_k: int = 10):
-    results = vectorstore.similarity_search_with_score(
-        query=query,
-        k=top_k
+def semantic_retrieve(query, top_k=20):
+    embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-    output = []
+    vectorstore = Chroma(
+        persist_directory=str(VECTOR_DIR),
+        embedding_function=embeddings
+    )
+
+    results = vectorstore.similarity_search_with_score(query, k=top_k)
+
+    faculty_scores = defaultdict(float)
+    faculty_meta = {}
+
     for doc, score in results:
-        output.append({
-            "faculty_id": doc.metadata["faculty_id"],
-            "name": doc.metadata["name"],
-            "faculty_category": doc.metadata["faculty_category"],
-            "semantic_score": round(float(score), 4)
-        })
+        meta = doc.metadata
+        field = meta["field"]
+        weight = FIELD_WEIGHTS.get(field, 0.1)
 
-    return output
+        faculty_id = meta["faculty_id"]
+        faculty_scores[faculty_id] += (1 - score) * weight
+        faculty_meta[faculty_id] = meta
 
+    ranked = sorted(
+        faculty_scores.items(),
+        key=lambda x: x[1],
+        reverse=True
+    )
 
-# Main
-if __name__ == "__main__":
-    query = "Machine Learning"
-    results = semantic_retrieve(query)
-
-    print(f"\nSemantic Results for query: '{query}'\n")
-    for r in results:
-        print(
-            f"{r['name']} | "
-            f"Category: {r['faculty_category']} | "
-            f"Score: {r['semantic_score']}"
-        )
+    return [
+        {
+            "faculty_id": fid,
+            "name": faculty_meta[fid]["name"],
+            "faculty_category": faculty_meta[fid]["faculty_category"],
+            "semantic_score": round(score, 4)
+        }
+        for fid, score in ranked
+    ]
