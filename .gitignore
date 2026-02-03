@@ -1,1 +1,17 @@
-.env
+# Python
+__pycache__/
+*.pyc
+
+# Virtual env
+venv/
+.env/
+
+# Vector stores / DBs
+rag/vector_store/
+*.sqlite3
+
+# Generated artifacts
+rag/artifacts/*.json
+
+# OS
+.DS_Store
