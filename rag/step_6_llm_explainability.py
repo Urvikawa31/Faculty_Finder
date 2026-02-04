@@ -4,7 +4,7 @@ import json
 import re
 
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+    model="gemini-2.5-flash-lite",
     temperature=0.2
 )
 
@@ -76,15 +76,34 @@ def explain_and_rerank(query, hybrid_results):
     parsed = _extract_json(raw_output)
 
     if parsed is None:
-        # 🔒 Fallback: preserve original ranking with explanation
+        # 🔒 Fallback: keep original order
         return [
             {
                 "rank": idx + 1,
+                "faculty_id": r["faculty_id"],
                 "name": r["name"],
                 "category": r["faculty_category"],
-                "reason": "LLM explanation unavailable; ranking based on hybrid retrieval score."
+                "reason": "Explanation unavailable. Ranked based on hybrid relevance score."
             }
             for idx, r in enumerate(hybrid_results)
         ]
 
-    return parsed
+    # 🔗 Reattach faculty_id by name matching
+    name_to_id = {r["name"]: r["faculty_id"] for r in hybrid_results}
+
+    final = []
+    for item in parsed:
+        faculty_id = name_to_id.get(item["name"])
+
+        if faculty_id is None:
+            continue
+
+        final.append({
+            "rank": item["rank"],
+            "faculty_id": faculty_id,
+            "name": item["name"],
+            "category": item["category"],
+            "reason": item["reason"]
+        })
+
+    return final
