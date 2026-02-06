@@ -8,6 +8,7 @@ class SearchRequest(BaseModel):
 
 class FacultyResult(BaseModel):
     rank: int
+    faculty_id: int
     name: str
     category: str
     reason: str

@@ -15,3 +15,5 @@ rag/artifacts/*.json
 
 # OS
 .DS_Store
+
+frontend/node_modules

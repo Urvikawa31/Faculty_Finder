@@ -1,18 +1,30 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
+from dotenv import load_dotenv
+load_dotenv()
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from api.schema import SearchRequest, SearchResponse
 from rag.step_5_hybrid_retrieval import hybrid_retrieve
 from rag.step_6_llm_explainability import explain_and_rerank
 from storage.fetch_faculty import fetch_faculty_by_id
+from storage.db import get_connection
 
 app = FastAPI(
     title="Faculty Finder API",
     description="Student-centric faculty recommendation system using hybrid retrieval and LLM reasoning",
     version="1.0"
 )
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Adding endpoint to check health of the API
 @app.get("/health")
@@ -93,6 +105,7 @@ def search_faculty(request: SearchRequest):
 
             final_results.append({
                 "rank": item["rank"],
+                "faculty_id": faculty["faculty_id"],
                 "name": faculty["name"],
                 "category": faculty["faculty_category"],
                 "reason": item["reason"],

@@ -4,6 +4,7 @@ import json
 import re
 
 llm = ChatGoogleGenerativeAI(
+    api_key = "AIzaSyDVL9AgS863gz5C78-Hy9PgFUImpSB3VTE",
     model="gemini-2.5-flash-lite",
     temperature=0.2
 )
@@ -11,57 +12,58 @@ llm = ChatGoogleGenerativeAI(
 PROMPT = PromptTemplate(
     input_variables=["query", "candidates"],
     template="""
-You are an academic mentor advising a university student who wants to collaborate
-with a faculty member for research or higher studies.
+You are an academic mentor advising a university student.
 
 Student Query:
 "{query}"
 
-Below is a shortlist of faculty candidates retrieved by an AI system.
-Each candidate includes name, faculty category, and relevance score.
+Below is a list of faculty candidates.
+Each candidate has a UNIQUE faculty_id.
 
 Candidates:
 {candidates}
 
 Your task:
-1. Rank the faculty from best to worst for the student.
+1. Rank ALL faculty from best to worst.
 2. For EACH faculty, explain:
-   - How their research, teaching, or publications align with the student's interest
-   - What the student can gain by working with them
-   - Any limitations or uncertainty (e.g., limited research evidence, adjunct role, availability)
-3. Write explanations in a **student-friendly advisory tone**.
-4. DO NOT mention numerical scores in the explanation.
+   - Alignment with the student's interest
+   - What the student gains
+   - Any limitations (adjunct role, availability, etc.)
+3. Use a student-friendly advisory tone.
+4. DO NOT mention scores.
+5. RETURN STRICT JSON ONLY.
+6. DO NOT invent or change faculty_id.
 
-Return ONLY valid JSON in the following format:
-
+Required JSON format:
 [
   {{
     "rank": 1,
-    "name": "...",
-    "category": "...",
+    "faculty_id": 48,
     "reason": "Student-focused explanation (3–4 lines)"
   }}
 ]
 """
 )
 
-
+# ---------- JSON SAFE PARSER ----------
 def _extract_json(text: str):
-    """
-    Safely extract JSON array from LLM output.
-    """
     try:
-        match = re.search(r"\[\s*{.*}\s*\]", text, re.DOTALL)
-        if match:
-            return json.loads(match.group())
+        text = text.replace("```json", "").replace("```", "").strip()
+        start = text.find("[")
+        end = text.rfind("]") + 1
+        if start == -1 or end == -1:
+            return None
+        return json.loads(text[start:end])
     except Exception:
-        pass
-    return None
+        return None
 
 
+# ---------- MAIN ENTRY ----------
 def explain_and_rerank(query, hybrid_results):
+
+    # Build ID-anchored candidate list
     candidates_text = "\n".join(
-        f"- {r['name']} ({r['faculty_category']}), score={r['final_score']}"
+        f"- faculty_id:{r['faculty_id']} | {r['name']} ({r['faculty_category']})"
         for r in hybrid_results
     )
 
@@ -75,34 +77,39 @@ def explain_and_rerank(query, hybrid_results):
 
     parsed = _extract_json(raw_output)
 
+    # 🔒 HARD FALLBACK (never break API)
     if parsed is None:
-        # 🔒 Fallback: keep original order
         return [
             {
                 "rank": idx + 1,
                 "faculty_id": r["faculty_id"],
                 "name": r["name"],
                 "category": r["faculty_category"],
-                "reason": "Explanation unavailable. Ranked based on hybrid relevance score."
+                "reason": "AI explanation unavailable. Ranked based on hybrid relevance score."
             }
             for idx, r in enumerate(hybrid_results)
         ]
 
-    # 🔗 Reattach faculty_id by name matching
-    name_to_id = {r["name"]: r["faculty_id"] for r in hybrid_results}
+    # Build lookup tables
+    faculty_map = {
+        r["faculty_id"]: r
+        for r in hybrid_results
+    }
 
     final = []
     for item in parsed:
-        faculty_id = name_to_id.get(item["name"])
+        faculty_id = item.get("faculty_id")
 
-        if faculty_id is None:
+        if faculty_id not in faculty_map:
             continue
+
+        faculty = faculty_map[faculty_id]
 
         final.append({
             "rank": item["rank"],
             "faculty_id": faculty_id,
-            "name": item["name"],
-            "category": item["category"],
+            "name": faculty["name"],
+            "category": faculty["faculty_category"],
             "reason": item["reason"]
         })
 
