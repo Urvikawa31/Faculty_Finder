@@ -198,8 +198,8 @@ User Query (HTML)<br>
 Query Cleaning & Embedding<br>
 ↓<br>
 Hybrid Retrieval<br>
-&emsp;BM25 (Lexical Matching)
-&emsp;Sentence Embeddings (Semantic Similarity)
+&emsp;BM25 (Lexical Matching)<br>
+&emsp;Sentence Embeddings (Semantic Similarity)<br>
 ↓<br>
 Score Fusion & Candidate Shortlisting<br>
 ↓<br>
