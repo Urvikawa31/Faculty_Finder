@@ -1,7 +1,7 @@
 # LLM Usage Log
 
 ## Project
-Faculty Finder – End-to-End Data Engineering Pipeline for Semantic Faculty Search
+Faculty Finder – End-to-End Data Engineering Pipeline and RAG Pipeline for Faculty Recommendation
 
 ---
 
@@ -20,6 +20,12 @@ This log documents **where and how the LLM was realistically used**.
 ---
 
 ## Usage Timeline (Honest Engineering Record)
+
+---
+
+# Phase 1 — Data Engineering Pipeline
+  
+Faculty Finder – Data Ingestion, Data Storage, Data Cleaning
 
 ---
 
@@ -187,6 +193,120 @@ Outlined pros and cons.
 - API serves cleaned data
 - Raw data retained internally
 - Future vector embeddings use cleaned text
+
+---
+
+# Phase 2 — AI Retrieval & RAG System Development
+
+## Project Extension
+Faculty Finder – Hybrid Retrieval, LLM Explainability
+
+---
+
+## Entry 08 — Hybrid Retrieval Design (BM25 + Embeddings)
+
+**Stage:** Retrieval Architecture  
+**Date:** 2026-01-23  
+
+**Problem:**  
+Uncertainty about whether to rely solely on embeddings or combine lexical retrieval.
+
+**Prompt Type:**  
+“Is hybrid retrieval better than pure semantic search for faculty discovery?”
+
+**LLM Contribution:**  
+Explained limitations of embedding-only retrieval (semantic drift, missed keyword precision).  
+Suggested combining BM25 with dense vector similarity.
+
+**Human Decision:**  
+Implemented:
+- BM25 for keyword precision
+- Sentence Transformers for semantic similarity
+- Weighted hybrid score aggregation
+
+**Outcome:**  
+Improved retrieval robustness and reduced false positives.
+
+---
+
+## Entry 09 — Re-ranking & Weight Calibration
+
+**Stage:** Ranking Logic  
+**Date:** 2026-01-24  
+
+**Problem:**  
+Determining how much weight to assign to:
+- Publications
+- Research
+- Specialization fields
+
+**Prompt Type:**  
+“How should hybrid relevance scoring be weighted across structured fields?”
+
+**LLM Contribution:**  
+Suggested a field-aware weighting strategy.
+
+**Human Implementation:**  
+- Designed custom weighted scoring
+- Experimented with field multipliers
+- Validated top-k outputs manually
+
+**Outcome:**  
+Research-aware ranking instead of naive similarity sorting.
+
+---
+
+## Entry 10 — LLM-Based Explanation Layer
+
+**Stage:** Explainability Layer  
+**Date:** 2026-01-25  
+
+**Problem:**  
+Generating structured, student-friendly explanations without hallucinated output.
+
+**Prompt Type:**  
+“How to constrain an LLM to return strict JSON responses?”
+
+**LLM Contribution:**  
+Suggested:
+- System-level JSON enforcement
+- Strict output instructions
+- Regex-based response validation
+
+**Human Debugging:**  
+- Detected malformed JSON responses
+- Implemented fallback ranking mechanism
+- Added safe parsing logic to prevent API crashes
+
+**Outcome:**  
+Stable explanation generation pipeline with fail-safe behavior.
+
+---
+
+## Entry 11 — Daily Featured Faculty Logic
+
+**Stage:** Frontend Data Strategy  
+**Date:** 2026-01-29  
+
+**Problem:**  
+Rotating featured faculty without backend scheduler or repeated API load.
+
+**Prompt Type:**  
+“How to rotate featured data daily without server-side cron?”
+
+**LLM Contribution:**  
+Suggested:
+- LocalStorage date-key caching
+- Deterministic daily refresh
+
+**Human Decision:**  
+Implemented:
+- Date-based daily caching
+- Randomized faculty selection
+- Single API fetch per day
+
+**Outcome:**  
+Dynamic daily feature section with minimal backend load.
 
 ---
 
