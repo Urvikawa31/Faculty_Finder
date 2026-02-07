@@ -198,8 +198,8 @@ User Query (HTML)<br>
 Query Cleaning & Embedding<br>
 ↓<br>
 Hybrid Retrieval<br>
-&emsp;BM25 (Lexical Matching)<br>
-&emsp;Sentence Embeddings (Semantic Similarity)<br>
+&emsp;- BM25 (Lexical Matching)<br>
+&emsp;- Sentence Embeddings (Semantic Similarity)<br>
 ↓<br>
 Score Fusion & Candidate Shortlisting<br>
 ↓<br>
@@ -260,7 +260,7 @@ Final Faculty Recommendations (with reasons)<br>
 
 faculty-finder/<br>
 │<br>
-├── api/<br>                    
+├── api/<br>
 │   ├── __pycache__/<br>
 │   ├── .env<br>
 │   ├── main.py<br>
@@ -286,7 +286,7 @@ faculty-finder/<br>
 │   ├── fetch_faculty.py<br>
 │   └── faculty.db<br>
 │<br>
-├── pipeline/<br>                
+├── pipeline/<br>
 │   ├── step_1_ingestion.py<br>
 │   ├── step_2_storage.py<br>
 │   └── step_3_cleaning.py<br>
