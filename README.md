@@ -260,41 +260,41 @@ Final Faculty Recommendations (with reasons)<br>
 
 faculty-finder/<br>
 │<br>
-├── api/<br>                         
+├── api/<br>                    
 │   ├── __pycache__/<br>
 │   ├── .env<br>
-│   ├── main.py<br>                  
-│   └── schema.py<br>               
+│   ├── main.py<br>
+│   └── schema.py<br>
 │<br>
-├── ingestion/<br>                    
+├── ingestion/<br>
 │   ├── __pycache__/<br>
-│   ├── discover_urls.py<br>          
-│   ├── http_client.py<br>            
-│   └── scrape_faculty.py<br>         
+│   ├── discover_urls.py<br>
+│   ├── http_client.py<br>
+│   └── scrape_faculty.py<br>
 │<br>
-├── cleaning/<br>                     
+├── cleaning/<br>
 │   ├── __pycache__/<br>
 │   ├── __init__.py<br>
 │   └── clean_faculty_records.py<br>
 │<br>
-├── storage/<br>                      
+├── storage/<br>
 │   ├── __pycache__/<br>
-│   ├── db.py<br>                     
-│   ├── schema.sql<br>                
-│   ├── init_db.py<br>                
-│   ├── insert_faculty.py<br>         
+│   ├── db.py<br>
+│   ├── schema.sql<br>
+│   ├── init_db.py<br>
+│   ├── insert_faculty.py<br>
 │   ├── fetch_faculty.py<br>
-│   └── faculty.db<br>                
+│   └── faculty.db<br>
 │<br>
-├── pipeline/<br>                     
+├── pipeline/<br>                
 │   ├── step_1_ingestion.py<br>
 │   ├── step_2_storage.py<br>
 │   └── step_3_cleaning.py<br>
 │<br>
-├── rag/<br>                          
+├── rag/<br>
 │   ├── __pycache__/<br>
-│   ├── artifacts/<br>                
-│   ├── vector_store/<br>             
+│   ├── artifacts/<br>
+│   ├── vector_store/<br>
 │   ├── step_1_text_construction.py<br>
 │   ├── step_2_bm25_retrieval.py<br>
 │   ├── step_3_semantic_index.py<br>
@@ -304,12 +304,12 @@ faculty-finder/<br>
 │   └── utils.py<br>
 │<br>
 ├── data/<br>
-│   ├── raw/<br>                      
+│   ├── raw/<br>
 │   │   └── raw_faculty_data.csv<br>
-│   ├── processed/<br>                
+│   ├── processed/<br>
 │   │   └── clean_faculty_data.csv<br>
 │<br>
-├── data_analysis/<br>                
+├── data_analysis/<br>
 │   ├── __pycache__/<br>
 │   ├── category_statistics.py<br>
 │   ├── data_overview.py<br>
@@ -320,16 +320,16 @@ faculty-finder/<br>
 │   ├── summary_report.py<br>
 │   └── text_statistics.py<br>
 │<br>
-├── frontend/<br>                     
+├── frontend/<br>
 │   ├── node_modules/<br>
 │   ├── src/<br>
-│   │   ├── assets/<br>               
+│   │   ├── assets/<br>
 │   │   │   ├── infraglyph.png<br>
 │   │   │   └── infraglyph.webp<br>
-│   │   ├── components/<br>           
+│   │   ├── components/<br>
 │   │   │   ├── Header.tsx<br>
 │   │   │   └── Footer.tsx<br>
-│   │   ├── pages/<br>                
+│   │   ├── pages/<br>
 │   │   │   ├── Home.tsx<br>
 │   │   │   ├── SearchResults.tsx<br>
 │   │   │   ├── FacultyDetail.tsx<br>
@@ -339,7 +339,7 @@ faculty-finder/<br>
 │   │   │   ├── HowItWorks.tsx<br>
 │   │   │   └── About.tsx<br>
 │   │   ├── services/<br>
-│   │   │   └── api.ts<br>             
+│   │   │   └── api.ts<br>
 │   │   ├── data/<br>
 │   │   │   └── mockData.ts<br>
 │   │   ├── App.tsx<br>
@@ -352,10 +352,10 @@ faculty-finder/<br>
 │   └── .env<br>
 │<br>
 ├── logs/<br>
-│   └── llm_usage.md<br>              
+│   └── llm_usage.md<br>
 │<br>
-├── run_pipeline.py<br>               
-├── requirements.txt<br>              
+├── run_pipeline.py<br>
+├── requirements.txt<br>
 ├── LICENSE<br>
 └── README.md<br>
 
